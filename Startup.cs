@@ -37,8 +37,9 @@ namespace FileManager
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
-
-            services.AddDbContext<HackDBContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            var conn = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<HackDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<HackDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
