@@ -42,7 +42,7 @@ namespace FileManager.Controllers
         {
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:44303{requestsEndpoints[command.CommandType]}");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:44303{requestsEndpoints[command.CommandType]}w");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
 
