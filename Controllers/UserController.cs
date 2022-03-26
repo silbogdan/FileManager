@@ -16,10 +16,10 @@ namespace FileManager.Controllers
         private HackDBContext _dbcontext = new HackDBContext();
         private IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, HackDBContext dbContext)
         {
             _userService = userService;
-            _dbcontext = new HackDBContext();
+            _dbcontext = dbContext;
         }
 
         [HttpPost("register")]

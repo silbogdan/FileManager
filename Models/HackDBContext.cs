@@ -1,18 +1,22 @@
 ﻿using System;
+using FileManager.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
 
 namespace FileManager.Models
 {
     public partial class HackDBContext : DbContext
     {
+        private readonly AppSettings _appSettings;
         public HackDBContext()
         {
         }
 
-        public HackDBContext(DbContextOptions<HackDBContext> options)
+        public HackDBContext(DbContextOptions<HackDBContext> options, IOptions<AppSettings> appSettings)
             : base(options)
         {
+            _appSettings = appSettings.Value;
         }
 
         public virtual DbSet<ServerData> ServerData { get; set; }
@@ -21,10 +25,6 @@ namespace FileManager.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=tcp:hackitall-server.database.windows.net,1433;Initial Catalog=Hack-DB;Persist Security Info=False;User ID=svepsdb;Password=Jn&RuWLg&Q8k!7Hz;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
