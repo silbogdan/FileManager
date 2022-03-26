@@ -22,11 +22,13 @@ namespace FileManager.Controllers
             _dbcontext = new HackDBContext();
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public IActionResult Register([FromBody] UserData user)
         {
             try
             {
+                user.Password = _userService.EncryptPassword(user.Password);
+
                 _dbcontext.UserData.Add(user);
                 _dbcontext.SaveChanges();
                 return Ok();
@@ -40,6 +42,7 @@ namespace FileManager.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateRequest user)
         {
+            user.Password = _userService.EncryptPassword(user.Password);
             var response = _userService.Authenticate(user);
 
             if (response == null)

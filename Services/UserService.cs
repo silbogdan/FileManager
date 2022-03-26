@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace FileManager.Services
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         UserData GetById(int id);
+        String EncryptPassword(string passowrd);
     }
 
     public class UserService : IUserService
@@ -45,6 +47,15 @@ namespace FileManager.Services
         public UserData GetById(int id)
         {
             return _dbcontext.UserData.FirstOrDefault(x => x.Id == id);
+        }
+
+        public string EncryptPassword(string password)
+        {
+            Byte[] inputBytes = Encoding.UTF8.GetBytes(password);
+
+            Byte[] hashedBytes = (new SHA256CryptoServiceProvider()).ComputeHash(inputBytes);
+
+            return BitConverter.ToString(hashedBytes);
         }
 
         // helper methods
