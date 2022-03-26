@@ -16,7 +16,7 @@ namespace FileManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FileManager : ControllerBase
+    public class FileManagerController : ControllerBase
     {
         private static readonly HttpClient client = new HttpClient();
         //public Dictionary<string, string> requestsTypes = new Dictionary<string, string>
@@ -42,7 +42,7 @@ namespace FileManager.Controllers
         {
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:44303{requestsEndpoints[command.CommandType]}w");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:44303{requestsEndpoints[command.CommandType]}");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
 
