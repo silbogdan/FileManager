@@ -24,12 +24,13 @@ namespace FileManager.Services
 
     public class UserService : IUserService
     {
-        HackDBContext _dbcontext = new HackDBContext();
+        HackDBContext _dbcontext;
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, HackDBContext dBContext)
         {
             _appSettings = appSettings.Value;
+            _dbcontext = dBContext;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
