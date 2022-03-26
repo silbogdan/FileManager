@@ -1,12 +1,41 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import "../styles/Login.css";
+import axios from 'axios';
 import { Logo } from "../assets/Logo.js";
 import { Link } from "react-router-dom";
 
 export const Register = () => {
-  function handleRegister(e) {
+    let history = useHistory();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleRegister(e) {
+
     e.preventDefault();
     console.log("Clicked register");
+
+    let data = {
+        username: username,
+        password,
+    };
+
+    let config = {
+        method: 'post',
+        url: '/User/register',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: data,
+    };
+
+    axios(config)
+    .then(function (response) {
+        history.push("/login");
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
   }
 
   return (
@@ -29,13 +58,15 @@ export const Register = () => {
             type="text"
             placeholder="Username"
             className="login-input"
-          ></input>
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <input
             type="password"
             placeholder="Password"
             className="login-input"
             style={{ marginBottom: "20px" }}
-          ></input>
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <button onClick={(e) => handleRegister(e)} className="login-btn">
             Register
           </button>

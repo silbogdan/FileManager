@@ -1,12 +1,42 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import "../styles/Login.css";
+import axios from 'axios';
 import { Logo } from "../assets/Logo.js";
 import { Link } from "react-router-dom";
 
 export const Login = () => {
-  function handleLogin(e) {
+    let history = useHistory();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleLogin(e) {
     e.preventDefault();
-    console.log("Clicked login");
+    let data = {
+        username: username,
+        password,
+    };
+
+    let config = {
+        method: 'post',
+        url: '/User/authenticate',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: data,
+    };
+
+    axios(config)
+        .then(function (response) {
+            let token = JSON.stringify(response.data["token"]);
+            localStorage.setItem('token', token);
+            console.log(token);
+            history.push("/files");
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
   }
 
   return (
@@ -26,16 +56,18 @@ export const Login = () => {
             Login to File Manager
           </h3>
           <input
-            type="text"
-            placeholder="Username"
-            className="login-input"
-          ></input>
+          type="text"
+          placeholder="Username"
+          className="login-input"
+          onChange={(e) => setUsername(e.target.value)}
+          />
           <input
-            type="password"
-            placeholder="Password"
-            className="login-input"
-            style={{ marginBottom: "20px" }}
-          ></input>
+          type="password"
+          placeholder="Password"
+          className="login-input"
+          style={{ marginBottom: "20px" }}
+          onChange={(e) => setPassword(e.target.value)}
+          />
           <button onClick={(e) => handleLogin(e)} className="login-btn">
             Login
           </button>
