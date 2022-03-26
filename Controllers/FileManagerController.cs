@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using FileManager.Helpers;
 using FileManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FileManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class FileManagerController : ControllerBase
     {
         private static readonly HttpClient client = new HttpClient();
@@ -38,11 +40,11 @@ namespace FileManager.Controllers
         };
 
         [HttpPost("ExecuteCommand")]
-        public IActionResult UploadItem([FromBody] Command command)
+        public IActionResult ExecuteCommand([FromBody] Command command)
         {
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://localhost:44303{requestsEndpoints[command.CommandType]}");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://20.199.114.244:80{requestsEndpoints[command.CommandType]}");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
 
