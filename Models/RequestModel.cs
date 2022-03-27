@@ -21,6 +21,10 @@ namespace FileManager.Models
         [JsonPropertyName("type")]
         [JsonProperty(PropertyName = "type")]
         public string FileType { get; set; }
+
+        [JsonPropertyName("filename")]
+        [JsonProperty(PropertyName = "filename")]
+        public string FileName { get; set; }
         public RequestModel() { }
     }
 }
