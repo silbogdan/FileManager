@@ -63,12 +63,29 @@ namespace FileManager.Services
 
         private string generateJwtToken(UserData user)
         {
+            List<PermissionsModel> claimPermissions = new List<PermissionsModel>();
+            var permissions = _dbcontext.UserPermission.Where(p => p.IdUser == user.Id).Select(x => new PermissionsModel(
+                _dbcontext.ServerData.FirstOrDefault(sd => sd.Id == x.IdServer).HostName,
+                _dbcontext.ServerData.FirstOrDefault(sd => sd.Id == x.IdServer).Ip));
             // generate token that is valid for 7 days
+            List<object> claimPermissionsFinal = new List<object>();
+
+            foreach (var item in permissions)
+            {
+                claimPermissionsFinal.Add(new
+                {
+                    hostname = item.HostName,
+                    ip = item.Ip
+                });
+            }
+            var permissionJson = Newtonsoft.Json.JsonConvert.SerializeObject(claimPermissionsFinal);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()),
+                new Claim("hosts", permissionJson)
+                }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
