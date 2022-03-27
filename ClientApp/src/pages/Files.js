@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../styles/Files.css";
-import { ServerIcon } from "../assets/ServerIcon";
-import { PlusIcon } from "../assets/PlusIcon";
+import { DirIcon } from "../assets/DirIcon";
+import { FileIcon } from "../assets/FileIcon";
+import { NavBar } from "../components/NavBar";
+import { FilesTable } from "../components/FilesTable";
 
 export const Files = () => {
   const [serverNames, setServerNames] = useState([
@@ -9,39 +11,26 @@ export const Files = () => {
     "filehostvm2",
     "filehostvm3",
   ]);
+  const [selectedServer, setSelectedServer] = useState("filehostvm1");
+  const [pwd, setPwd] = useState("/home/user");
+  const [files, setFiles] = useState([
+    { name: "file1", size: "2.4" },
+    { name: "file2", size: "3.2" },
+  ]);
+  const [directories, setDirectories] = useState(["dir1", "dir2"]);
 
   return (
     <>
-      <nav className="side-navbar">
-        <div className="servers-container">
-          <h1>File Manager</h1>
-          <div>
-            {serverNames.map((server) => (
-              <div className="server-entry">
-                <div style={{ width: "30px", height: "30px" }}>
-                  <ServerIcon />
-                </div>
-                <p style={{ marginLeft: "15px" }}>{server}</p>
-              </div>
-            ))}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "10px",
-            }}
-          >
-            <div style={{ width: "30px" }}>
-              <PlusIcon />
-            </div>
-            <b style={{ marginTop: "2px" }}>Connect to a server</b>
-          </div>
-        </div>
-        <div className="greet-container"></div>
-      </nav>
+      <NavBar serverNames={serverNames} />
       <header className="header">Lol ce e cu mine aici</header>
-      <div className="file-content">dwdwdw</div>
+      <div className="file-content">
+        <div style={{ marginLeft: "330px", marginTop: "20px" }}>
+          <h3 style={{ fontWeight: "700" }}>
+            {selectedServer} @ {pwd}
+          </h3>
+          <FilesTable files={files} directories={directories} />
+        </div>
+      </div>
     </>
   );
 };
