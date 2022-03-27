@@ -12,7 +12,8 @@ export const FilesTable = ({
   setPwd,
   setFiles,
   setDirectories,
-  pwd
+  pwd,
+  curServer
 }) => {
   function enableModal(e, item) {
     e.preventDefault();
@@ -22,11 +23,13 @@ export const FilesTable = ({
 
   async function goToDirectory(e, dir) {
     e.preventDefault();
+    console.log("Go to " + dir + " for " + curServer);
     var data = JSON.stringify({
       "command": "get-items",
       "req": {
-        "path": dir
-      }
+        "path": dir,
+      },
+      "host": curServer
     });
 
     const token = localStorage.getItem('token');

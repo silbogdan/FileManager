@@ -47,7 +47,7 @@ namespace FileManager.Controllers
         {
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://20.111.40.3:80{requestsEndpoints[command.CommandType]}");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://{command.Host}:80{requestsEndpoints[command.CommandType]}");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 Console.WriteLine(httpWebRequest.Address.ToString());

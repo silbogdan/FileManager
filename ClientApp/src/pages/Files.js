@@ -14,13 +14,16 @@ import { Upload } from "../assets/Upload";
 export const Files = () => {
   const token = localStorage.getItem("token");
   const decodedToken = jwt_decode(token);
+  let hosts = JSON.parse(decodedToken.hosts);
+  const [curServer, setCurServer] = useState(hosts[0].ip);
   const [serverNames, setServerNames] = useState([]);
   const [selectedServer, setSelectedServer] = useState(serverNames[0]);
   const [pwd, setPwd] = useState("/");
   const [files, setFiles] = useState([]);
-  const [directories, setDirectories] = useState(["dir1", "dir2"]);
+  const [directories, setDirectories] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
+
 
   useEffect(() => {
     async function getItems() {
@@ -30,6 +33,7 @@ export const Files = () => {
         req: {
           path: "/",
         },
+        host: curServer
       });
 
       var config = {
@@ -52,6 +56,7 @@ export const Files = () => {
     let sNames = JSON.parse(decodedToken.hosts);
     sNames = sNames.map((server) => server.hostname);
     setServerNames(sNames);
+    setSelectedServer(sNames[0]);
 
   }, []);
 
@@ -67,7 +72,7 @@ export const Files = () => {
         <></>
       )}
       <div style={{ filter: showModal ? "blur(5px)" : "none" }}>
-        <NavBar serverNames={serverNames} />
+        <NavBar serverNames={serverNames} curServer={curServer} setPwd={setPwd} setDirectories={setDirectories} setFiles={setFiles} setCurServer={setCurServer} setSelectedServer={setSelectedServer} />
         <header className="header">
           <div className="two-items-left">
             <div className="buttons-container">
@@ -108,6 +113,8 @@ export const Files = () => {
               setFiles={setFiles}
               setDirectories={setDirectories}
               pwd={pwd}
+              curServer={curServer}
+              setCurServer={setCurServer}
             />
           </div>
         </div>
