@@ -97,7 +97,7 @@ export const FilesTable = ({
                 <td>{file.Size} GB</td>
               </div>
               <td>
-                <button onClick={(e) => enableModal(e, { name: file, type: "file" })}>Edit</button>
+                <button onClick={(e) => enableModal(e, { name: file.Name, type: "file" })}>Edit</button>
               </td>
             </tr>
           ))}

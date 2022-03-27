@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/Files.css";
 import { DirIcon } from "../assets/DirIcon";
@@ -23,6 +23,13 @@ export const Files = () => {
   const [directories, setDirectories] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
+  const inputEl = useRef();
+
+  function uploadFile() {
+    let fileList = inputEl.files[0];
+    console.log(fileList);
+  }
+  
 
 
   useEffect(() => {
@@ -57,7 +64,6 @@ export const Files = () => {
     sNames = sNames.map((server) => server.hostname);
     setServerNames(sNames);
     setSelectedServer(sNames[0]);
-
   }, []);
 
   return (
@@ -67,6 +73,7 @@ export const Files = () => {
           itemName={selectedItem.name}
           itemType={selectedItem.type}
           setShowModal={setShowModal}
+          curServer={curServer}
         />
       ) : (
         <></>
@@ -83,11 +90,9 @@ export const Files = () => {
                 <b>Create</b>
               </div>
 
-              <div>
-                <div style={{ width: "30px", margin: "5px" }}>
-                  <Upload />
-                </div>
-                <b>Upload</b>
+              <div style={{ cursor: 'pointer' }}>
+       
+                <input type="file" id="upload-input" ref={inputEl} onChange={uploadFile}></input>
               </div>
             </div>
             <input
@@ -122,3 +127,4 @@ export const Files = () => {
     </>
   );
 };
+
