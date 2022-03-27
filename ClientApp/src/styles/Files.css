@@ -35,3 +35,27 @@
   cursor: pointer;
   background-color: #3885a7;
 }
+
+body {
+    overflow: hidden;
+}
+.two-items-left {
+  padding: 2px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttons-container {
+  margin-left: 100px;
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+}
+
+#query {
+  height: 40px;
+  width: 300px;
+  background-color: f5f5f5;
+}
