@@ -35,3 +35,7 @@
   cursor: pointer;
   background-color: #3885a7;
 }
+
+body {
+    overflow: hidden;
+}
