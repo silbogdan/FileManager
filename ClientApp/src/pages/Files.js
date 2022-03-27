@@ -8,6 +8,8 @@ import { FilesTable } from "../components/FilesTable";
 import { Modal } from "../components/Modal";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { Create } from "../assets/Create";
+import { Upload } from "../assets/Upload";
 
 export const Files = () => {
   const token = localStorage.getItem("token");
@@ -66,7 +68,25 @@ export const Files = () => {
       )}
       <div style={{ filter: showModal ? "blur(5px)" : "none" }}>
         <NavBar serverNames={serverNames} />
-        <header className="header">Lol ce e cu mine aici</header>
+        <header className="header">
+          <div className="two-items-left">
+            <div style={{ width: "30px" }}>
+              <Create />
+            </div>
+            <b>Create</b>
+            <div style={{ width: "30px", margin: "5px" }}>
+              <Upload />
+            </div>
+            <b>Upload</b>
+            <input
+              style={{ float: "right" }}
+              type="search"
+              id="query"
+              name="q"
+              placeholder="Search..."
+            />
+          </div>
+        </header>
         <div className="file-content">
           <div style={{ marginLeft: "330px", marginTop: "20px" }}>
             <h3 style={{ fontWeight: "700" }}>
