@@ -70,14 +70,21 @@ export const Files = () => {
         <NavBar serverNames={serverNames} />
         <header className="header">
           <div className="two-items-left">
-            <div style={{ width: "30px" }}>
-              <Create />
+            <div className="buttons-container">
+              <div>
+                <div style={{ width: "30px" }}>
+                  <Create />
+                </div>
+                <b>Create</b>
+              </div>
+
+              <div>
+                <div style={{ width: "30px", margin: "5px" }}>
+                  <Upload />
+                </div>
+                <b>Upload</b>
+              </div>
             </div>
-            <b>Create</b>
-            <div style={{ width: "30px", margin: "5px" }}>
-              <Upload />
-            </div>
-            <b>Upload</b>
             <input
               style={{ float: "right" }}
               type="search"
