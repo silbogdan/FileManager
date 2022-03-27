@@ -1,0 +1,18 @@
+.modal-box {
+  background-color: rgb(240, 240, 240);
+  width: 420px;
+  height: 480px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 25vh;
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  filter: none !important;
+  z-index: 10;
+}

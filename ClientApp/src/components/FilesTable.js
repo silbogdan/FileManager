@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import "../styles/FilesTable.css";
 import { FileIcon } from "../assets/FileIcon";
 import { DirIcon } from "../assets/DirIcon";
-import { Modal } from "./Modal";
 
-export const FilesTable = ({ files, directories }) => {
-  const [showModal, setShowModal] = useState(false);
+export const FilesTable = ({
+  setSelectedItem,
+  setShowModal,
+  files,
+  directories,
+}) => {
+  function enableModal(e, item) {
+    e.preventDefault();
+    setShowModal(true);
+    setSelectedItem(item);
+  }
 
   return (
     <>
-      {showModal ? <Modal /> : <></>}
       <table className="table-stretch">
         <thead>
           <tr>
@@ -20,7 +27,10 @@ export const FilesTable = ({ files, directories }) => {
         </thead>
         <tbody>
           {files.map((file) => (
-            <tr style={{ cursor: "pointer" }}>
+            <tr
+              style={{ cursor: "pointer" }}
+              onClick={(e) => enableModal(e, { name: file.name, type: "file" })}
+            >
               <td>
                 <div style={{ width: "30px", heigh: "30px" }}>
                   <FileIcon />
@@ -31,7 +41,10 @@ export const FilesTable = ({ files, directories }) => {
             </tr>
           ))}
           {directories.map((dir) => (
-            <tr style={{ cursor: "pointer" }}>
+            <tr
+              style={{ cursor: "pointer" }}
+              onClick={(e) => enableModal(e, { name: dir, type: "dir" })}
+            >
               <td>
                 <div style={{ width: "30px", heigh: "30px" }}>
                   <DirIcon />
