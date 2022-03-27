@@ -34,9 +34,12 @@ namespace FileManager.Controllers
         {
             {"get-items", "/Files/GetItemsAtPath"},
             {"download", "/Files/DownloadFile"},
-            {"delete", "/Files/UploadItem"},
-            {"create", "/Files/DeleteItem"},
-            {"upload", "/Files/CreateItem"}
+            {"upload", "/Files/UploadItem"},
+            {"delete", "/Files/DeleteItem"},
+            {"create", "/Files/CreateItem"},
+            {"find", "/Files/FindItem"},
+            {"list-proc-sorted", "/Files/ListProcessesSorted"},
+            {"list-proc", "/Files/ListProcesses"}
         };
 
         [HttpPost("ExecuteCommand")]
@@ -44,15 +47,17 @@ namespace FileManager.Controllers
         {
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://20.199.114.244:80{requestsEndpoints[command.CommandType]}");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create($"http://20.111.40.3:80{requestsEndpoints[command.CommandType]}");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
+                Console.WriteLine(httpWebRequest.Address.ToString());
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
                     var json = JsonConvert.SerializeObject(command.Request);
 
                     streamWriter.Write(json);
+                    Console.WriteLine(json);
                 }
 
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
@@ -65,6 +70,7 @@ namespace FileManager.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return BadRequest();
             }
         }
