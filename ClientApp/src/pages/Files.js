@@ -6,6 +6,7 @@ import { FileIcon } from "../assets/FileIcon";
 import { NavBar } from "../components/NavBar";
 import { FilesTable } from "../components/FilesTable";
 import { Modal } from "../components/Modal";
+import { CreateModal } from "../components/CreateModal";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { Create } from "../assets/Create";
@@ -22,6 +23,7 @@ export const Files = () => {
   const [files, setFiles] = useState([]);
   const [directories, setDirectories] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   const inputEl = useRef();
 
@@ -30,7 +32,9 @@ export const Files = () => {
     console.log(fileList);
   }
   
-
+  function createFile() {
+    setCreateModal(true);
+  }
 
   useEffect(() => {
     async function getItems() {
@@ -66,6 +70,7 @@ export const Files = () => {
     setSelectedServer(sNames[0]);
   }, []);
 
+  
   return (
     <>
       {showModal ? (
@@ -75,15 +80,21 @@ export const Files = () => {
           setShowModal={setShowModal}
           curServer={curServer}
         />
-      ) : (
+      ) : createModal ? (
+        <CreateModal 
+          setCreateModal={setCreateModal}
+          pwd={pwd}
+          curServer={curServer}
+        />
+        ) : (
         <></>
       )}
-      <div style={{ filter: showModal ? "blur(5px)" : "none" }}>
+      <div style={{ filter: showModal || createModal ? "blur(5px)" : "none" }}>
         <NavBar serverNames={serverNames} curServer={curServer} setPwd={setPwd} setDirectories={setDirectories} setFiles={setFiles} setCurServer={setCurServer} setSelectedServer={setSelectedServer} />
         <header className="header">
           <div className="two-items-left">
             <div className="buttons-container">
-              <div>
+              <div className="create-btn" onClick={createFile}>
                 <div style={{ width: "30px" }}>
                   <Create />
                 </div>

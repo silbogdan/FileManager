@@ -84,16 +84,14 @@ export const FilesTable = ({
         </thead>
         <tbody>
           {files.map((file) => (
-            <tr
-              style={{ cursor: "pointer" }}
-            >
+            <tr>
               <div onClick={(e) => goToDirectory(e, dir)}>
-                <td>
+                <td style={{ cursor: 'pointer' }}>
                   <div style={{ width: "30px", heigh: "30px" }}>
                     <FileIcon />
                   </div>
                 </td>
-                <td>{file.Name.split('/').pop()}</td>
+                <td style={{ cursor: 'pointer' }}>{file.Name.split('/').pop()}</td>
                 <td>{file.Size} GB</td>
               </div>
               <td>
@@ -102,16 +100,14 @@ export const FilesTable = ({
             </tr>
           ))}
           {directories.map((dir) => (
-            <tr
-              style={{ cursor: "pointer" }}
-            >
+            <tr>
               <div onClick={(e) => goToDirectory(e, dir)}>
-                <td>
+                <td style={{ cursor: 'pointer' }}>
                   <div style={{ width: "30px", heigh: "30px" }}>
                     <DirIcon />
                   </div>
                 </td>
-                <td>{dir.split('/').pop()}</td>
+                <td style={{ cursor: 'pointer' }}>{dir.split('/').pop()}</td>
                 <td> - </td>
               </div>
               <td>
