@@ -31,6 +31,7 @@ export const CreateModal = ({ setCreateModal, pwd, curServer }) => {
           };
           
           await axios(config);
+          setCreateModal(false);
       } else {
           console.log('Error');
       }

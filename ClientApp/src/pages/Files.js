@@ -79,6 +79,8 @@ export const Files = () => {
           itemType={selectedItem.type}
           setShowModal={setShowModal}
           curServer={curServer}
+          pwd={pwd}
+          setPwd={setPwd}
         />
       ) : createModal ? (
         <CreateModal 
